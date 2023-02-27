@@ -321,6 +321,16 @@ let () =
 
 </details>
 
+<details>
+  <summary>Show implementation notes</summary>
+
+  - The `equate` function just structually checks two supplied terms, unfurling lambda abstractions as necessary. If we want to check two terms for beta-convertibility, we must first evaluate them, and only then call `equate`.
+  - The `infer_ty`, `infer_sort`, and `check_ty` functions always return an evaluated type.
+  - A typing context (`ctx`) is required to hold only evaluated types and be well-formed, meaning that every entry must be of some sort with respect to the rest of the context.
+  - Bindings are always added to the beginning of a context; thus, they are indexed by De Bruijn _indices_. Since `FreeVar` holds De Bruijn _levels_, we use the `lvl - x - 1` formula to access `ctx` in `infer_ty`.
+  - In the last case of `check_ty`, we call `equate` to check `ty` and `got_ty` for beta-convertibility. Since both `ty` and `got_ty` are already values, we have no need to evaluate them again.
+</details>
+
 <div align="center">
   <img src="https://user-images.githubusercontent.com/40539574/221297687-b3171e0b-3323-41a5-ab67-7e33984f2826.gif" width="350px">
 </div>
