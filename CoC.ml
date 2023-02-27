@@ -25,7 +25,7 @@ let rec eval = function
   | Lam f -> Lam (fun n -> eval (f n))
   | Pi (a, f) -> Pi (eval a, fun n -> eval (f n))
   | Appl (m, n) -> (
-      match (eval m, eval n) with Lam f, n -> eval (f n) | m, n -> Appl (m, n))
+      match (eval m, eval n) with Lam f, n -> f n | m, n -> Appl (m, n))
   | Ann (m, _a) -> eval m
   | (FreeVar _ | Star | Box) as t -> t
 
@@ -54,7 +54,7 @@ let rec infer_ty lvl ctx = function
       match infer_ty lvl ctx m with
       | Pi (a, f) ->
           let _ = check_ty lvl ctx (n, a) in
-          eval (f n)
+          f n
       | m_ty -> panic lvl m "Want a Pi type, got %s" (print lvl m_ty))
   | Ann (m, a) ->
       let _s = infer_sort lvl ctx a in

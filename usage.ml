@@ -116,6 +116,9 @@ let () =
                                   fun _y -> vect_ty n (appl pair [ a; b ]) ) )
                     ) ) );
     ]
+    (* A typing context must contain only evaluated types. *)
+    |> List.map eval
+    (* Context bindings must be indexed by De Bruijn indices, not levels. *)
     |> List.rev
   in
 
