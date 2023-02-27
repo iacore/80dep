@@ -2,6 +2,11 @@
 
 > The only difference(!) between Shakespeare and you was the size of his idiom list -- not the size of his vocabulary.<br>&emsp; &emsp; <b>-- Alan Perlis, Epigrams on Programming [^epigrams]</b>
 
+<div align="right">
+
+  _This post has been discussed on [Reddit](https://www.reddit.com/r/ProgrammingLanguages/comments/11bo39o/how_to_implement_dependent_types_in_80_lines_of/)._
+</div>
+
 Dependent types are constantly gaining more and more attention in the world of functional programming. Some believe that, through the unification of type and term-level syntax [^unified-syntax] [^cayenne], they are capable of displacing many specific typing features of traditional languages, such as Haskell or OCaml, whereas others believe in the feasibility of proving theorems about code in the same language, through the fusion of programming and constructive mathematics [^curry-howard] [^idris-lang].
 
 But what are dependent types, actually? Just as in most general-purpose programming languages we have types dependent on _types_, colloquially known as "generic types", in dependently typed languages, we have types dependent on _terms_. This addition makes the language very expressive, effectively enabling a user to perform term computation at compile-time. For example, consider what should happen when the type checker sees some argument `x` applied to `f` -- it should _check_ that the type of `x` is computationally equal (or "beta-convertible", as used in the literature) to the parameter type of `f`; this check involves reducing these two types to their beta normal forms and comparing them for alpha equivalence [^alpha-eq] [^eta-conv].
