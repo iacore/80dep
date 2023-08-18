@@ -1,0 +1,42 @@
+# #use "CoC.ml";;
+type term =
+    Lam of (term -> term)
+  | Pi of term * (term -> term)
+  | Appl of term * term
+  | Ann of term * term
+  | FreeVar of int
+  | Star
+  | Box
+val unfurl : int -> (term -> 'a) -> 'a = <fun>
+val unfurl2 : int -> (term -> 'a) * (term -> 'b) -> 'a * 'b = <fun>
+val print : int -> term -> string = <fun>
+val eval : term -> term = <fun>
+val equate : int -> term * term -> bool = <fun>
+val panic : int -> term -> ('a, unit, string, 'b) format4 -> 'a = <fun>
+val infer_ty : int -> term list -> term -> term = <fun>
+val infer_sort : int -> term list -> term -> term = <fun>
+val check_ty : int -> term list -> term * term -> term = <fun>
+# #use  "test.ml";;
+val test_print : unit -> unit = <fun>
+val test_equate : unit -> unit = <fun>
+val test_eval : unit -> unit = <fun>
+val assert_infer_sort : term list -> term -> term -> unit = <fun>
+val test_infer_sort : unit -> unit = <fun>
+val assert_infer : term list -> term -> term -> unit = <fun>
+val test_infer_var : unit -> unit = <fun>
+val test_infer_star_box : unit -> unit = <fun>
+val test_infer_pi : unit -> unit = <fun>
+val test_infer_appl : unit -> unit = <fun>
+val test_infer_ann : unit -> unit = <fun>
+val test_infer_lam : unit -> unit = <fun>
+val assert_check : term list -> term -> term -> unit = <fun>
+val test_check_lam : unit -> unit = <fun>
+val test_check_infer : unit -> unit = <fun>
+val impredicative_id : unit -> unit = <fun>
+# #use "usage.ml";;     
+val curry2 : (term -> term -> term) -> term = <fun>
+val curry3 : (term -> term -> term -> term) -> term = <fun>
+val curry4 : (term -> term -> term -> term -> term) -> term = <fun>
+val curry5 : (term -> term -> term -> term -> term -> term) -> term = <fun>
+val appl : term -> term list -> term = <fun>
+val assert_beta_eq : term -> term -> unit = <fun>
